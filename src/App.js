@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import TodoList from './components/TodoList';
+
+class App extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      showTodo: false,
+      time: 5
+    }
+  }
+
+  componentDidMount(){
+    this.counter = setInterval(()=>{
+      if(this.state.time===0){
+        clearInterval(this.counter);
+        this.setState({
+          showTodo: true
+        })
+      }else{
+        this.setState(prevState => ({time: prevState.time-1}));
+      }
+      
+    },1000);
+  }
+
+  render(){
+    
+    return (
+      <div className="App">
+        {
+          this.state.showTodo? <TodoList/>:  <h1>{this.state.time}</h1>
+        }     
+        </div>
+    );
+  }
 }
 
 export default App;
